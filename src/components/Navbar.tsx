@@ -160,14 +160,14 @@ const Navbar = () => {
                       <button className="flex items-center hover:bg-gray-700 px-3 py-1 rounded-md text-lg">
                         {item.title} <FiChevronDown className="ml-2" />
                       </button>
-                      <div className="absolute hidden group-hover:block bg-white text-black rounded-md shadow-lg">
+                      <div className="absolute hidden group-hover:block bg-white text-black rounded-md shadow-lg w-full">
                         {item.children
                           .filter((subItem) => subItem.isActive)
                           .map((subItem) => (
                             <Link
                               key={subItem.id}
                               href={item.slug + subItem.slug}
-                              className="block px-4 py-2 hover:bg-gray-200"
+                              className="block px-1 py-2 hover:bg-gray-200 max-w-full overflow-hidden"
                             >
                               {subItem.title}
                             </Link>
