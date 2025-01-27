@@ -109,7 +109,16 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const toggleDropdown = (id: number) => setDropdown(dropdown === id ? null : id);
-  const [menus, setMenus] = useState([]);
+  interface NavItem {
+    id: number;
+    title: string;
+    slug: string;
+    parentId: number | null;
+    isActive: boolean;
+    children?: NavItem[];
+  }
+
+  const [menus, setMenus] = useState<NavItem[]>([]);
 
 
 
@@ -146,7 +155,7 @@ const Navbar = () => {
               .filter((item) => item.parentId === null && item.isActive)
               .map((item) => (
                 <div key={item.id} className="relative group">
-                  {item.children?.length > 0 ? (
+                  {item.children && item.children.length > 0 ? (
                     <>
                       <button className="flex items-center hover:bg-gray-700 px-3 py-1 rounded-md text-lg">
                         {item.title} <FiChevronDown className="ml-2" />

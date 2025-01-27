@@ -6,16 +6,23 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const menuData = await prisma.menu.findMany({
-    });
+    const menuData = await prisma.menu.findMany();
 
     // Function to transform flat data into a nested structure
-    const buildMenuTree = (menuItems: any[], parentId: number | null = null) => {
+    interface MenuItem {
+      id: number;
+      title: string;
+      slug: string;
+      parentId: number | null;
+      isActive: boolean;
+      children?: MenuItem[];
+    }
+
+    const buildMenuTree = (menuItems: MenuItem[], parentId: number | null = null): MenuItem[] => {
       return menuItems
         .filter((item) => item.parentId === parentId)
         .map((item) => ({
           id: item.id,
-          menu: item.menu,
           title: item.title,
           slug: item.slug,
           parentId: item.parentId,

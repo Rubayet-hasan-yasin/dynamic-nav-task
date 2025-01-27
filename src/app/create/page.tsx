@@ -15,7 +15,7 @@ const AddMenu = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [parentMenus, setParentMenus] = useState([]);
+  const [parentMenus, setParentMenus] = useState<{ id: string; title: string }[]>([]);
   const [menus, setMenus] = useState([]);
 
 
@@ -56,7 +56,7 @@ const AddMenu = () => {
     try {
       console.log(formData);
       
-      const response = await axios.post("/api/menu", {
+       await axios.post("/api/menu", {
         menuTitle: formData.menuTitle,
         slug: formData.slug,
         parentId: formData.parentId || null,

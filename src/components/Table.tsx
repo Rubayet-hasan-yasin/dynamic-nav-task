@@ -3,9 +3,28 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 
-const Table = ({ menus, fetchMenus  }) => {
+interface Menu {
+    id: number;
+    title: string;
+    slug: string;
+    parentId?: number;
+    isActive: boolean;
+}
 
-    const handleUpdateAction = async (menuId, currentStatus) => {
+interface TableProps {
+    menus: Menu[];
+    fetchMenus: () => void;
+}
+interface HandleUpdateActionParams {
+    menuId: number;
+    currentStatus: boolean;
+}
+
+const Table: React.FC<TableProps> = ({ menus, fetchMenus }) => {
+
+    
+
+    const handleUpdateAction = async ({ menuId, currentStatus }: HandleUpdateActionParams): Promise<void> => {
         const toastId = toast.loading('Updating status...');
     
         try {
@@ -79,7 +98,7 @@ const Table = ({ menus, fetchMenus  }) => {
                             <td className="px-4 border border-black border-opacity-50">
                                 <button
                                     className="text-blue-500 hover:text-blue-700"
-                                    onClick={() => handleUpdateAction(menu.id, menu.isActive)}
+                                    onClick={() => handleUpdateAction({ menuId: menu.id, currentStatus: menu.isActive })}
                                 >
                                     {menu.isActive ? <FiEye /> : <FiEyeOff />}
                                 </button>
