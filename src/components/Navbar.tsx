@@ -7,100 +7,6 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 
-const navItems = [
-  {
-    id: 1,
-    menu: "home",
-    title: "Home",
-    slug: "/",
-    parentId: null,
-    isActive: true,
-  },
-  {
-    id: 2,
-    menu: "products",
-    title: "Products",
-    slug: "#",
-    parentId: null,
-    isActive: true,
-    children: [
-      {
-        id: 3,
-        menu: "electronics",
-        title: "Electronics",
-        slug: "/products/electronics",
-        parentId: 2,
-        isActive: true,
-      },
-      {
-        id: 4,
-        menu: "clothing",
-        title: "Clothing",
-        slug: "/products/clothing",
-        parentId: 2,
-        isActive: true,
-      },
-      {
-        id: 5,
-        menu: "appliances",
-        title: "Home Appliances",
-        slug: "/products/home-appliances",
-        parentId: 2,
-        isActive: true,
-      },
-    ],
-  },
-  {
-    id: 6,
-    menu: "services",
-    title: "Services",
-    slug: "#",
-    parentId: null,
-    isActive: true,
-    children: [
-      {
-        id: 7,
-        menu: "consulting",
-        title: "Consulting",
-        slug: "/services/consulting",
-        parentId: 6,
-        isActive: true,
-      },
-      {
-        id: 8,
-        menu: "maintenance",
-        title: "Maintenance",
-        slug: "/services/maintenance",
-        parentId: 6,
-        isActive: true,
-      },
-      {
-        id: 11,
-        menu: "Create Menu",
-        title: "Create Menu",
-        slug: "/create",
-        parentId: 6,
-        isActive: true,
-      },
-    ],
-  },
-  {
-    id: 9,
-    menu: "about",
-    title: "About Us",
-    slug: "/about",
-    parentId: null,
-    isActive: true,
-  },
-  {
-    id: 10,
-    menu: "contact",
-    title: "Contact",
-    slug: "/contact",
-    parentId: null,
-    isActive: true,
-  },
-];
 
 
 const Navbar = () => {
@@ -198,11 +104,11 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-gray-800">
-          {navItems
+          {menus
             .filter((item) => item.parentId === null && item.isActive)
             .map((item) => (
               <div key={item.id}>
-                {item.children ? (
+                {item.children && item.children.length > 0 ? (
                   <>
                     <button
                       onClick={() => toggleDropdown(item.id)}
@@ -215,7 +121,7 @@ const Navbar = () => {
                         {item.children.map((subItem) => (
                           <Link
                             key={subItem.id}
-                            href={subItem.slug}
+                            href={item.slug + subItem.slug}
                             className="block px-4 py-2 hover:bg-gray-600"
                           >
                             {subItem.title}
@@ -225,7 +131,7 @@ const Navbar = () => {
                     )}
                   </>
                 ) : (
-                  <Link href={item.slug} className="block px-4 py-2 hover:bg-gray-700">
+                  <Link onClick={()=>setIsOpen(false)} href={item.slug} className="block px-4 py-2 hover:bg-gray-700">
                     {item.title}
                   </Link>
                 )}
